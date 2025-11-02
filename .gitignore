@@ -1,5 +1,7 @@
 code/frameworks/scATD/pretrained_models/
 */AGENTS.md
+AGENTS.md
+.gitignore
 */wandb/
 */lightning_logs/
 lightning_logs/
