@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Optional, Tuple
 
-# Third-party imports
+# other imports
 import numpy as np
 import pandas as pd
 import torch

@@ -8,7 +8,7 @@ from copy import deepcopy
 from typing import Any, Dict, List, Optional
 import json
 
-# Third-party imports
+# other imports
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -1106,7 +1106,7 @@ def run_scatd_benchmark(
 
     wandb_logger = WandbLogger(name=run_name, config=args)
     if wandb.run is not None:
-        wandb.log({"binarize_threshold": binarize_threshold, "binarize_treshold": binarize_threshold})
+        wandb.log({"binarize_threshold": binarize_threshold, "binarize_treshold": binarize_threshold}) # This bug lead to the binarizesource True/ False not being logged
 
     early_stop_callback = DelayedEarlyStopping(
         delay_epochs=args.get("epochs_classifier", 0),

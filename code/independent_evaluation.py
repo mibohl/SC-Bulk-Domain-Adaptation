@@ -201,7 +201,7 @@ def _build_target_combinations() -> Dict[str, list[tuple[str, str]]]:
 DRUG_TARGETS = {drug: _unique_targets(tags) for drug, tags in TARGET_FILE_NAMES.items()}
 TARGET_COMBINATIONS = _build_target_combinations()
 
-WANDB_TUNING_PROJECT_PATH = "bohl/hyper_tuning_v3"
+WANDB_TUNING_PROJECT_PATH = "bohl/hyper_tuning_5"
 MODEL_TARGET_HYPERS: Dict[str, Dict[str, Dict[str, Dict[str, object]]]] = {}
 _MODEL_TARGET_HYPERS_PATH: Optional[str] = None
 

@@ -14,7 +14,7 @@ from types import SimpleNamespace
 from optuna.integration.wandb import WeightsAndBiasesCallback
 
 
-# --- Inlined from hyperparameter_space.py ---
+
 class ScadArgs:
     def __init__(self, drug_name):
         self.drug = drug_name
@@ -32,7 +32,6 @@ class ScadArgs:
         self.balancing_strategy = "weighted"
         self.h_dim = 1024
         self.predictor_z_dim = 128 
-        # Threshold tuning (default on)
         self.tune_threshold = True
         self.binarize_source = True
         self.patience = 10
@@ -63,9 +62,9 @@ class ScDealArgs:
         self.bottleneck = 128
         self.mmd_weight = 0.25
         self.balancing_strategy = "weighted"
-        self.lr_bulk = 0.01  # Not in sweep
-        self.lr_sc = 0.01  # Not in sweep
-        self.dropout_bulk = 0.3  # Not in sweep
+        self.lr_bulk = 0.01 
+        self.lr_sc = 0.01 
+        self.dropout_bulk = 0.3  
         self.tune_threshold = True
         self.binarize_source = True
 
@@ -89,7 +88,6 @@ class Ssda4DrugArgs:
         self.encoder_h_dims = "512,256"
         self.predictor_h_dims = "64,32"
         self.balancing_strategy = "weighted"
-        # Threshold tuning (default on)
         self.tune_threshold = True
         self.binarize_source = True
 
@@ -112,7 +110,6 @@ class ScAtdArgs:
         self.z_dim = 421
         self.hidden_dim_layer0 = 1664
         self.hidden_dim_layer_out_Z = 359
-        # Other params
         self.pretrained_model_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "frameworks", "scATD", "pretrained_models", "checkpoint_fold1_epoch_30.pth"))
         self.tune_threshold = True
         self.binarize_source = True
@@ -144,7 +141,6 @@ SYMBOL_ENSEMBL_MAP = os.path.join(DATA_DIR, "..", "reference", "symbol_ensembl_m
 WANDB_PROJECT = "hyper_tuning_v5"
 
 # This global variable will hold the data for the current sweep run.
-# It"s a simple way to pass data to the wandb agent"s train function.
 CURRENT_DATA = {}
 CURRENT_MODEL_CONFIG = {}
 
@@ -216,11 +212,12 @@ def prepare_data(drug, target_tag, all_files, data_dir):
         X_target, y_target_series, test_size=0.2, random_state=SEED, stratify=y_target_series
     )
 
-    # DEBUG: label distribution
+    # DEBUG statements
+    # label distribution
     print(f"Source train label counts {np.bincount((y_source_train >= 0.5).astype(int))}, val counts {np.bincount((y_source_val >= 0.5).astype(int))}, test counts {np.bincount((y_source_test >= 0.5).astype(int))}")
     print(f"Target train label counts {y_target_train.value_counts().to_dict()}, test counts {y_target_test.value_counts().to_dict()}")
 
-    # print source and target data dimensions
+    # source and target data dimensions
     print(f"Source train data dimensions: {X_source_train.shape}")
     print(f"Target train data dimensions: {X_target_train.shape}")
 
@@ -367,7 +364,6 @@ def main():
                             self.tune_threshold = True 
 
                     args = CatBoostArgs(drug, model_name)
-                    # No specific args to set from trial for CatBoostArgs, but we need the object.
                     # The benchmark function will handle the trial suggestions.
                     benchmark_func = run_catboost_benchmark
                     
@@ -427,7 +423,7 @@ def main():
                     return results.get(monitor_split, {}).get(monitor_metric, -1.0)
 
             study = optuna.create_study(direction="maximize", sampler=optuna.samplers.TPESampler(seed=SEED), study_name=f"{drug}_{target_tag}_{model_name}")
-            
+            # Initial starting point (baseline) parameters
             if model_name == "SCAD":
                 initial_params = {
                     "lr": 0.0005,
