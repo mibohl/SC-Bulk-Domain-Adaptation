@@ -29,10 +29,10 @@ The script takes the following arguments:
 - `--n_trials`: The number of Optuna trials.
 - `--model`: The name of the model to tune.
 
-For example, to run the hyperparameter tuning for the SCAD model on the drug Olaparib with 100 trials, you can run the following command:
+For example, to run the hyperparameter tuning for the SCAD model on the drug Docetaxel with 10 Optuna trials, you can run the following command:
 
 ```bash
-bash -c "conda activate benchmark && python code/hyper_tuning.py --drugs Olaparib --n_trials 100 --model SCAD"
+bash -c "conda activate benchmark && python code/hyper_tuning.py --drugs Docetaxel --n_trials 10 --model SCAD"
 ```
 
 ## Directory Structure
@@ -53,8 +53,6 @@ The `code/` folder gathers data processing helpers, experiment orchestration scr
   - `scATD/`: Wraps a pre-trained Dist-VAE encoder and classifier head. `setup` loads checkpoints, aligning gene vocabularies by padding/truncation; fine-tuning alternates between frozen-classifier warm-up and optional encoder unfreezing, optimizing cross-entropy plus an RBF MMD penalty via manual optimization.
   - `scDeal/`: Implements the three-stage scDEAL workflow. Autoencoder/predictor pretraining is followed by a DaNN domain adaptation step with BCE, MMD, and Louvain-cluster similarity regularizers, orchestrated through manual optimization. Utilities in `scDEAL_utils.py` construct target KNN graphs and Louvain assignments.
   - `SSDA4Drug/`: Lightning module that implements, SSDA4Drug, with a shared encoder and classifier to which adversarial perturbations can be applied optionally. Training mixes supervised cross-entropy (source + few-shot target) with alternating entropy minimization and maximization on unlabeled target batches via `utils.adentropy`.
-- `code/lightning_logs/` & `code/wandb/`: Local cache directories for PyTorch Lightning checkpoints and Weights & Biases runs generated during experiments.
-- `code/AGENTS.md`: Notes on automation agents used during reproduction runs.
 
 ## Downloading Data
 - To reproduce the results, you will need to download the datasesets used in the paper into  `datasets/processed/` [URL to be added].
