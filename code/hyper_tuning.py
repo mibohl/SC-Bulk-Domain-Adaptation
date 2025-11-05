@@ -265,7 +265,7 @@ def main():
         "Vorinostat": ["SCC47"],
         "Etoposide": ["GSE149383_PC9"],
         "Erlotinib": ["GSE149383_PC9"],
-        "Docetaxel": ["GSE140440_PC3", "GSE140440_DU145"],
+        "Docetaxel": ["GSE140440_DU145", "GSE140440_PC3"],
         "Sorafenib":  ["GSE175716_HCC", "SCC47"], 
         "Gefitinib": [ "GSE162045_PC9", "GSE202234_H1975", "GSE202234_PC9", "JHU006", "GSE112274_PC9"], # 
         "Afatinib": ["GSE228154_LT","SCC47"] 

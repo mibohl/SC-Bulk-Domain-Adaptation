@@ -12,6 +12,14 @@ conda env create -f environment.yaml
 ```
 
 This will create a conda environment named `benchmark` with all the necessary packages.
+Additionally, you need a Weights & Biases (wandb) account. The secltion below explains a minimal configuration needed to run the `code/hyper_tuning.py` and `code/independent_evaluation.py` script
+
+### Weights & Biases Setup
+
+- Create or use an existing wandb account at https://wandb.ai and copy your API key (Profile → Settings → API Keys).
+- Activate the `benchmark` environment and authenticate by running `wandb login <your_api_key>` (or set `WANDB_API_KEY=<your_api_key>` in the shell before starting the script).
+- By default runs are logged to the project named `hyper_tuning_v5` under your personal entity. Create that project in the wandb UI or change the `WANDB_PROJECT` constant in `code/hyper_tuning.py` to match an existing project. Optionally, set `WANDB_ENTITY=<team_or_username>` if you want to log to a specific team workspace.
+- After authentication, `code/hyper_tuning.py` will create a run group per drug/target/model and store the local cache under `code/wandb/` automatically—no further setup is required.
 
 ## Hyperparameter Tuning
 
